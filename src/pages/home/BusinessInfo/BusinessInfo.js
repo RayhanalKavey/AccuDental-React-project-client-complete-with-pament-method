@@ -17,6 +17,7 @@ const BusinessInfo = () => {
       title: "Visit our location",
       description: "Brooklyn, NY 10036, United States",
       svg: marker,
+      customCss: "bg-accent text-info",
     },
     {
       id: 3,

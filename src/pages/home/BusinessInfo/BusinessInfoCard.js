@@ -4,10 +4,10 @@ const BusinessInfoCard = ({ card }) => {
   const { svg, title, description, customCss } = card;
   return (
     <section
-      className={`card card-side bg-base-100 shadow-xl p-[32px]  ${customCss}`}
+      className={`card card-side   shadow-xl p-[32px] flex-col  lg:flex-row  ${customCss}`}
     >
       <figure>
-        <img src={svg} alt="Movie" />
+        <img className="w-1/5 lg:w-full" src={svg} alt="Movie" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">${title}</h2>
