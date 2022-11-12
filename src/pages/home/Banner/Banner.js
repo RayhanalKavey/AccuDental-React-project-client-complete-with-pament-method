@@ -4,8 +4,8 @@ import ButtonMain from "../../../shared/component/ButtonMain/ButtonMain";
 
 const Banner = () => {
   return (
-    <div className="hero  bg-base-100 px-[38px]">
-      <div className="hero-content flex-col lg:flex-row-reverse gap-7 mt-14">
+    <section className="hero  bg-base-100 px-[38px]">
+      <div className="hero-content flex-col lg:flex-row-reverse gap-7 mt-32">
         <img src={chair} className="max-w-sm rounded-lg shadow-2xl" alt="" />
         <div>
           <h1 className="text-5xl font-bold">Your new style start here.</h1>
@@ -17,7 +17,7 @@ const Banner = () => {
           <ButtonMain>Get Started</ButtonMain>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
