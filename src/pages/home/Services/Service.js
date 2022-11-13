@@ -7,7 +7,7 @@ const Service = ({ serviceDetail }) => {
       className={`card card-side   shadow-xl p-[32px] flex-col   ${customCss}`}
     >
       <figure>
-        <img className="w-1/5 lg:w-full" src={pic} alt="Movie" />
+        <img className="w-28 " src={pic} alt="Movie" />
       </figure>
       <div className="card-body">
         <h2 className="card-title">${title}</h2>

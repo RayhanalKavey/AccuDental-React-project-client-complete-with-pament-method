@@ -3,6 +3,8 @@ import whitening from "../../../assets/images/whitening.png";
 import cavity from "../../../assets/images/cavity.png";
 import fluoride from "../../../assets/images/fluoride.png";
 import Service from "./Service";
+import SmallHeading from "../../../shared/component/SmallHeading/SmallHeading";
+import PrimaryHeading from "../../../shared/component/PrimaryHeading/PrimaryHeading";
 const Services = () => {
   const serviceDetails = [
     {
@@ -32,9 +34,12 @@ const Services = () => {
     },
   ];
   return (
-    <div>
-      <div></div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 justify-evenly mt-32">
+    <div className=" mt-32">
+      <div className="text-center mb-8">
+        <SmallHeading customStyle="mb-3">Our Services</SmallHeading>
+        <PrimaryHeading>Service We Provide</PrimaryHeading>
+      </div>
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 justify-evenly">
         {serviceDetails.map((serviceDetail) => (
           <Service
             serviceDetail={serviceDetail}
