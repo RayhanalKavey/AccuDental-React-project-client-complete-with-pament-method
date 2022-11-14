@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer
       className="footer p-10  text-neutral-content"
-      style={{ background: `url(${bgFooter})` }}
+      style={{ background: `url(${bgFooter})`, backgroundSize: "cover" }}
     >
       <div>
         <span className="footer-title">Services</span>
