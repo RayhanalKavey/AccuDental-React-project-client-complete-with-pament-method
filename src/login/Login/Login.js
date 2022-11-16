@@ -18,7 +18,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center h-[800px]">
-      <div className="w-96 p-7 shadow-lg">
+      <div className="w-96 p-7 shadow-2xl">
         {" "}
         <h1 className="text-3xl my-5 text-center">Login</h1>
         {/* From react hook form */}
@@ -48,34 +48,20 @@ const Login = () => {
             <input
               type="password"
               {...register("password", {
-                required: "Your password must be strong!",
-                minLength: {
-                  value: 6,
-                  message: "Password must be 6 character or longer.",
-                },
+                required: "Password is required",
               })}
               className="input input-bordered w-full max-w-xs"
               placeholder="Your password"
             />
             {/* Show password erroRs */}
             {errors.password && (
-              <p className="text-error mt-1" role="alert">
-                {errors.password?.message}
-              </p>
+              <p className="text-error mt-1">{errors.password?.message}</p>
             )}{" "}
             <label className="label">
               <span className="label-text-alt">Forget password?</span>
             </label>
           </div>
           {/* daisy ui */}
-
-          {/* <select {...register("category", { required: true })}>
-            <option value="">Select...</option>
-            <option value="A">Option A</option>
-            <option value="B">Option B</option>
-          </select> */}
-          {/* <textarea {...register("aboutYou")} placeholder="About you" /> */}
-          {/* <p>{data}</p> */}
 
           <input
             className="btn btn-secondary w-full mt-5 mb-1"
