@@ -1,9 +1,31 @@
+import { format } from "date-fns/esm";
 import React from "react";
 
-const BookingModal = ({ treatment }) => {
-  console.log(treatment);
+const BookingModal = ({ treatment, selectDate, setTreatment }) => {
+  // console.log(treatment);
   const { name, slots } = treatment;
+  const date = format(selectDate, "PP");
 
+  const handleBooking = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const patientName = form.name.value;
+    const slot = form.slot.value;
+    const phone = form.phone.value;
+    const email = form.email.value;
+
+    const booking = {
+      appointmentDate: date,
+      treatment: name,
+      patientName,
+      slot,
+      phone,
+      email,
+    };
+    console.log(booking);
+    form.reset();
+    setTreatment(null);
+  };
   return (
     <>
       {/* The button to open modal
@@ -22,32 +44,43 @@ const BookingModal = ({ treatment }) => {
             ✕
           </label>
           <h3 className="text-lg font-bold mb-5">{name}</h3>
-          <form className="flex flex-col m-5 gap-3" action="">
+          <form
+            onSubmit={handleBooking}
+            className="flex flex-col m-5 gap-3"
+            action=""
+          >
             <input
               type="text"
-              placeholder="Full name"
+              placeholder="Selected date"
               className="input input-bordered w-full "
+              defaultValue={date}
               readOnly
             />
+            <select
+              className="select select-bordered w-full max-w-xs"
+              name="slot"
+            >
+              {slots.map((slot, idx) => (
+                <option key={idx}>{slot}</option>
+              ))}
+            </select>
+
             <input
               type="text"
+              name="name"
               placeholder="Full name"
               className="input input-bordered w-full "
-              readOnly
             />
             <input
               type="text"
-              placeholder="Full name"
-              className="input input-bordered w-full "
-            />
-            <input
-              type="text"
+              name="phone"
               placeholder="Phone number"
               className="input input-bordered w-full "
             />
 
             <input
               type="email"
+              name="email"
               placeholder="Email"
               className="input input-bordered w-full "
             />
