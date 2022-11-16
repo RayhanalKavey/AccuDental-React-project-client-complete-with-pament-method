@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -8,7 +8,7 @@ import useTitle from "../../hooks/useTitle/useTitle";
 
 const SignUp = () => {
   useTitle("Sign Up");
-
+  // const [reload, setRelod] = useState(null);
   const {
     register,
     handleSubmit,
@@ -58,7 +58,9 @@ const SignUp = () => {
   };
 
   //reload page after create a user
-  useEffect(() => {}, [user?.photoURL]);
+  // useEffect(() => {
+  //   user?.photoURL && window.location.reload();
+  // }, [use]);
   //  update user when cheating.// we also update using this in the profile
   const handleUpdateUserProfile = (name, photoURL) => {
     const profile = {
@@ -66,7 +68,7 @@ const SignUp = () => {
       photoURL: photoURL,
     };
     updateUserProfile(profile)
-      .then(() => {})
+      .then((result) => {})
       .catch((error) => {
         toast.error(error.message);
       });

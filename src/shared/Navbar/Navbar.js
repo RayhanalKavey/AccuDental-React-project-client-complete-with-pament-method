@@ -45,7 +45,7 @@ const Navbar = () => {
           {user?.photoURL ? (
             <li className="mr-5">
               <img
-                className="w-14 h-14 rounded-lg"
+                className="w-12 h-12 rounded-xl"
                 src={user?.photoURL}
                 alt=""
                 title={user?.displayName}
