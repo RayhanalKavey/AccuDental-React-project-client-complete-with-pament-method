@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import useTitle from "../../hooks/useTitle/useTitle";
 
 const SignUp = () => {
@@ -12,9 +15,61 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
+  const { createUser, updateUserProfile, googleLogin, user, setUser } =
+    useContext(AuthContext);
+  //==========
+  //------------- redirect user
+  const navigate = useNavigate();
+  //------------- user location where they want to go
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  //LogIn/sign up with google
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("Logged in successfully!!");
+
+        //Navigate user to the desired path
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
+  //==========
   const handleSignUp = (data) => {
-    console.log(data);
-    console.log(errors);
+    const { name, email, password, photoURL } = data;
+    ///create user with email and password
+    createUser(email, password)
+      .then((result) => {
+        const user = result.user;
+        toast.success("User cleated successfully.");
+
+        //Navigate user to the desired path
+        navigate(from, { replace: true });
+
+        handleUpdateUserProfile(name, photoURL);
+      })
+      .catch((error) => {
+        toast.error(`${error.message}`);
+      });
+  };
+
+  //reload page after create a user
+  useEffect(() => {}, [user?.photoURL]);
+  //  update user when cheating.// we also update using this in the profile
+  const handleUpdateUserProfile = (name, photoURL) => {
+    const profile = {
+      displayName: name,
+      photoURL: photoURL,
+    };
+    updateUserProfile(profile)
+      .then(() => {})
+      .catch((error) => {
+        toast.error(error.message);
+      });
   };
 
   return (
@@ -40,6 +95,16 @@ const SignUp = () => {
             {errors.name && (
               <p className="text-error mt-1"> {errors.name?.message}</p>
             )}
+            {/* ParT photoUrl */}
+            <label className="label">
+              <span className="label-text">Photo URL</span>
+            </label>
+            <input
+              type="text"
+              {...register("photoURL")}
+              className="input input-bordered w-full max-w-xs"
+              placeholder="Your Photo"
+            />
             {/*ParT email */}
             <label className="label">
               <span className="label-text">Email</span>
@@ -113,6 +178,7 @@ const SignUp = () => {
         </p>
         <div className="divider">or</div>
         <input
+          onClick={handleGoogleLogin}
           className="btn btn-secondary w-full btn-outline"
           type="submit"
           value="Sign in with Google"

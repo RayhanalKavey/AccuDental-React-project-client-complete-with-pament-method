@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
+  const { logout, setUser, user } = useContext(AuthContext);
+  /// Handle log out
+  const handleSignOut = () => {
+    logout()
+      .then((result) => {
+        toast.success("Logged out successfully!");
+        setUser(null);
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
   const navItems = (
     <React.Fragment>
       <li>
@@ -20,18 +35,38 @@ const Navbar = () => {
   );
   const logInOut = (
     <>
-      <li>
-        {" "}
-        <Link to={"/login"}>Login</Link>
-      </li>
-      <li>
-        {" "}
-        <Link to={"/signup"}>Sign Up</Link>
-      </li>
-      <li>
-        {" "}
-        <Link> Logout</Link>
-      </li>
+      {user?.uid ? (
+        <>
+          {" "}
+          <li>
+            {" "}
+            <Link onClick={handleSignOut}> Logout</Link>
+          </li>
+          {user?.photoURL ? (
+            <li className="mr-5">
+              <img
+                className="w-14 h-14 rounded-lg"
+                src={user?.photoURL}
+                alt=""
+                title={user?.displayName}
+              />
+            </li>
+          ) : (
+            <li title={user?.displayName}>
+              <FaUser></FaUser>
+            </li>
+          )}
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to={"/login"}>Login</Link>
+          </li>
+          <li>
+            <Link to={"/signup"}>Sign Up</Link>
+          </li>
+        </>
+      )}
     </>
   );
 
@@ -70,7 +105,7 @@ const Navbar = () => {
         <ul className="menu menu-horizontal p-0">{navItems}</ul>
       </div>
       <div className="navbar-end ">
-        <ul className="flex gap-6">{logInOut}</ul>
+        <ul className="flex gap-6 items-center">{logInOut}</ul>
       </div>
     </div>
   );

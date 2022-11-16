@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import useTitle from "../../hooks/useTitle/useTitle";
 
 const Login = () => {
   useTitle("LogIn");
-
+  const { logIn, googleLogin, setUser } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState();
   const {
     register,
     formState: { errors },
@@ -13,9 +16,41 @@ const Login = () => {
   } = useForm();
 
   const handleLogin = (data) => {
-    console.log(data);
-  };
+    // console.log(data);
+    const { email, password } = data;
+    setLoginError("");
+    //Log In with email and password
+    logIn(email, password)
+      .then((result) => {
+        const user = result.user;
 
+        //Navigate user to the desired path
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        setLoginError(error.message);
+      });
+  };
+  //------------- redirect user
+  const navigate = useNavigate();
+  //------------- user location where they want to go
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  //LogIn/sign up with google
+  const handleGoogleLogin = () => {
+    googleLogin()
+      .then((result) => {
+        const user = result.user;
+        setUser(user);
+        toast.success("Logged in successfully!!");
+
+        //Navigate user to the desired path
+        navigate(from, { replace: true });
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
   return (
     <div className="flex items-center justify-center h-[800px]">
       <div className="w-96 p-7 shadow-2xl">
@@ -68,6 +103,11 @@ const Login = () => {
             type="submit"
             value="Login"
           />
+          {loginError && (
+            <label className="label">
+              <span className="label-text-alt text-error">{loginError}</span>
+            </label>
+          )}
         </form>
         <p className="text-center">
           New to AccuDental?{" "}
@@ -77,6 +117,7 @@ const Login = () => {
         </p>
         <div className="divider">or</div>
         <input
+          onClick={handleGoogleLogin}
           className="btn btn-secondary w-full btn-outline"
           type="submit"
           value="Sign in with Google"
