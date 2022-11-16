@@ -31,6 +31,9 @@ const Navbar = () => {
       <li>
         <Link to={"/reviews"}>Reviews</Link>
       </li>
+      <li>
+        <Link to={"/dashBoard"}>Dashboard</Link>
+      </li>
     </React.Fragment>
   );
   const logInOut = (

@@ -22,7 +22,7 @@ const Login = () => {
     //Log In with email and password
     logIn(email, password)
       .then((result) => {
-        const user = result.user;
+        // const user = result.user;
 
         //Navigate user to the desired path
         navigate(from, { replace: true });
@@ -42,7 +42,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         setUser(user);
-        toast.success("Logged in successfully!!");
+        toast.success(`Welcome ${user?.displayName}`);
 
         //Navigate user to the desired path
         navigate(from, { replace: true });

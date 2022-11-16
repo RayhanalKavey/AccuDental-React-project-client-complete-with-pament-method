@@ -17,6 +17,8 @@ const SignUp = () => {
 
   const { createUser, updateUserProfile, googleLogin, user, setUser } =
     useContext(AuthContext);
+
+  const [signUpError, setSignUpError] = useState();
   //==========
   //------------- redirect user
   const navigate = useNavigate();
@@ -28,8 +30,9 @@ const SignUp = () => {
     googleLogin()
       .then((result) => {
         const user = result.user;
+
+        toast.success(`Welcome ${user?.displayName}`);
         setUser(user);
-        toast.success("Logged in successfully!!");
 
         //Navigate user to the desired path
         navigate(from, { replace: true });
@@ -41,11 +44,12 @@ const SignUp = () => {
   //==========
   const handleSignUp = (data) => {
     const { name, email, password, photoURL } = data;
+    setSignUpError("");
     ///create user with email and password
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        toast.success("User cleated successfully.");
+        toast.success(`Welcome ${user?.displayName}`);
 
         //Navigate user to the desired path
         navigate(from, { replace: true });
@@ -53,7 +57,7 @@ const SignUp = () => {
         handleUpdateUserProfile(name, photoURL);
       })
       .catch((error) => {
-        toast.error(`${error.message}`);
+        setSignUpError(error.message);
       });
   };
 
@@ -171,6 +175,11 @@ const SignUp = () => {
             type="submit"
             value="Sign Up"
           />
+          {signUpError && (
+            <label className="label">
+              <span className="label-text-alt text-error">{signUpError}</span>
+            </label>
+          )}
         </form>
         <p className="text-center">
           Already have an account?{" "}
