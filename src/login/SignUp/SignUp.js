@@ -51,10 +51,7 @@ const SignUp = () => {
         const user = result.user;
         toast.success(`Welcome ${user?.displayName}`);
 
-        //Navigate user to the desired path
-        navigate(from, { replace: true });
-
-        handleUpdateUserProfile(name, photoURL);
+        handleUpdateUserProfile(name, photoURL, email);
       })
       .catch((error) => {
         setSignUpError(error.message);
@@ -66,18 +63,34 @@ const SignUp = () => {
   //   user?.photoURL && window.location.reload();
   // }, [use]);
   //  update user when cheating.// we also update using this in the profile
-  const handleUpdateUserProfile = (name, photoURL) => {
+  const handleUpdateUserProfile = (name, photoURL, email) => {
     const profile = {
       displayName: name,
       photoURL: photoURL,
     };
     updateUserProfile(profile)
-      .then((result) => {})
+      .then((result) => {
+        saveUser(name, email, photoURL); //erroR
+      })
       .catch((error) => {
         toast.error(error.message);
       });
   };
-
+  // Save user to the data base
+  const saveUser = (name, email, photoURL) => {
+    const user = { name, email, photoURL };
+    fetch(`http://localhost:5005/users`, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json)
+      .then((data) => {
+        //Navigate user to the desired path
+        navigate(from, { replace: true });
+        console.log(data);
+      });
+  };
   return (
     <div className="flex items-center justify-center h-[800px]">
       <div className="w-96 p-7 shadow-2xl">
