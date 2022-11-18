@@ -4,12 +4,7 @@ import Navbar from "../../../shared/Navbar/Navbar";
 
 const DashBoard = () => {
   useTitle("Dashboard");
-  return (
-    <div>
-      <Navbar></Navbar>
-      this is dash board
-    </div>
-  );
+  return <div>dash</div>;
 };
 
 export default DashBoard;

@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthProvider/AuthProvider";
 import toast from "react-hot-toast";
 
-const BookingModal = ({ treatment, selectDate, setTreatment }) => {
+const BookingModal = ({ treatment, selectDate, setTreatment, refetch }) => {
   // console.log(treatment);
   const { name, slots } = treatment;
   const date = format(selectDate, "PP");
@@ -42,6 +42,9 @@ const BookingModal = ({ treatment, selectDate, setTreatment }) => {
           //can add spinner here
           toast.success("Booking confirmed");
           setTreatment(null);
+          refetch();
+        } else {
+          toast.error(data.message);
         }
       });
 
