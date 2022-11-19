@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { FaRegCalendar } from "react-icons/fa";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import useTitle from "../../hooks/useTitle/useTitle";
+import useToken from "../../hooks/useToken/useToken";
 
 const SignUp = () => {
   useTitle("Sign Up");
@@ -14,17 +16,23 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const { createUser, updateUserProfile, googleLogin, user, setUser } =
+  const { createUser, updateUserProfile, googleLogin, setUser } =
     useContext(AuthContext);
+  const [signUpError, setSignUpError] = useState("");
 
-  const [signUpError, setSignUpError] = useState();
-  //==========
+  //==========jwt workinG
+  const [createdUserEmail, setCreatedUserEmail] = useState("");
+  const [token] = useToken(createdUserEmail);
   //------------- redirect user
   const navigate = useNavigate();
   //------------- user location where they want to go
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  if (token) {
+    // //Navigate user to the desired path
+    navigate(from, { replace: true });
+  }
+
   //LogIn/sign up with google
   const handleGoogleLogin = () => {
     googleLogin()
@@ -70,7 +78,8 @@ const SignUp = () => {
     };
     updateUserProfile(profile)
       .then((result) => {
-        saveUser(name, email, photoURL); //erroR
+        console.log(result); // erroR
+        saveUser(name, email, photoURL);
       })
       .catch((error) => {
         toast.error(error.message);
@@ -84,13 +93,20 @@ const SignUp = () => {
       headers: { "content-type": "application/json" },
       body: JSON.stringify(user),
     })
-      .then((res) => res.json)
+      .then((res) => res.json())
       .then((data) => {
-        //Navigate user to the desired path
-        navigate(from, { replace: true });
-        console.log(data);
+        // console.log(data);
+        //jwt
+        if (data.acknowledged) {
+          setCreatedUserEmail(email);
+        }
+        // getUserToken(email);
       });
   };
+
+  // // /get user token (issued token)
+  // // const getUserToken = (email) => {};
+
   return (
     <div className="flex items-center justify-center h-[800px]">
       <div className="w-96 p-7 shadow-2xl">

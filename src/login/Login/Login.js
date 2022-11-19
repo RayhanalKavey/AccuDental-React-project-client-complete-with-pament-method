@@ -4,17 +4,19 @@ import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import useTitle from "../../hooks/useTitle/useTitle";
+import useToken from "../../hooks/useToken/useToken";
 
 const Login = () => {
   useTitle("LogIn");
   const { logIn, googleLogin, setUser } = useContext(AuthContext);
-  const [loginError, setLoginError] = useState();
+  const [loginError, setLoginError] = useState("");
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-
+  const [loginUserEmail, setLoginUserEmail] = useState("");
+  const [token] = useToken(loginUserEmail);
   const handleLogin = (data) => {
     // console.log(data);
     const { email, password } = data;
@@ -23,9 +25,9 @@ const Login = () => {
     logIn(email, password)
       .then((result) => {
         // const user = result.user;
-
+        setLoginUserEmail(email);
         //Navigate user to the desired path
-        navigate(from, { replace: true });
+        // navigate(from, { replace: true }); //workinG
       })
       .catch((error) => {
         setLoginError(error.message);
@@ -36,6 +38,10 @@ const Login = () => {
   //------------- user location where they want to go
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
+  if (token) {
+    navigate(from, { replace: true }); //workinG
+  }
   //LogIn/sign up with google
   const handleGoogleLogin = () => {
     googleLogin()
