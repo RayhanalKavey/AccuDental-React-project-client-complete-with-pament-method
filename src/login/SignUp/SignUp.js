@@ -10,7 +10,7 @@ import useToken from "../../hooks/useToken/useToken";
 
 const SignUp = () => {
   useTitle("Sign Up");
-  // const [reload, setRelod] = useState(null);
+  const { setReload } = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -78,7 +78,8 @@ const SignUp = () => {
     };
     updateUserProfile(profile)
       .then((result) => {
-        console.log(result); // erroR
+        console.log(result); //
+        setReload(false);
         saveUser(name, email, photoURL);
       })
       .catch((error) => {

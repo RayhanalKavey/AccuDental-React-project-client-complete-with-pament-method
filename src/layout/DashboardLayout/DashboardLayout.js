@@ -24,7 +24,7 @@ const DashboardLayout = () => {
               <Link to={"/dashboard"}>My Appointment</Link>
             </li>
             <li>
-              <Link to={"/users"}>All Users</Link>
+              <Link to={"/dashboard/allusers"}>All Users</Link>
             </li>
           </ul>
         </div>

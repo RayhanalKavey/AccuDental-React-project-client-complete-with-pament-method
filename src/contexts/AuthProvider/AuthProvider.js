@@ -18,6 +18,8 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   ///leading state to prevent the reload log out issue
   const [loading, setLoading] = useState(true);
+  ////
+  const [reload, setReload] = useState(true);
 
   //sign Up
   const createUser = (email, password) => {
@@ -49,7 +51,7 @@ const AuthProvider = ({ children }) => {
       setLoading(false);
     });
     return () => unsubscribe();
-  }, []);
+  }, [reload]);
 
   //Sign-out
   const logout = () => {
@@ -67,6 +69,7 @@ const AuthProvider = ({ children }) => {
     googleLogin,
     logout,
     loading,
+    setReload,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

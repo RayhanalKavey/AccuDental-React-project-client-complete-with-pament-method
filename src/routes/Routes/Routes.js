@@ -5,6 +5,7 @@ import Login from "../../login/Login/Login";
 import SignUp from "../../login/SignUp/SignUp";
 import ErrorPage from "../../others/ErrorPage/ErrorPage";
 import Appointment from "../../pages/appointment/Appointment/Appointment";
+import AllUsers from "../../pages/dashBoard/AllUsers/AllUsers";
 import DashBoard from "../../pages/dashBoard/DashBoard/DashBoard";
 import MyAppointment from "../../pages/dashBoard/MyAppointment/MyAppointment";
 import Home from "../../pages/home/Home/Home";
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/dashBoard",
         element: <MyAppointment></MyAppointment>,
+      },
+      {
+        path: "/dashBoard/allusers",
+        element: <AllUsers></AllUsers>,
       },
     ],
   },
