@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider/AuthProvider";
 import useAdmin from "../../hooks/useAdmin/useAdmin";
+import Loading from "../../shared/component/Loading/Loading";
 
 const AdminRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
@@ -11,10 +12,11 @@ const AdminRoute = ({ children }) => {
   if (loading || setIsAdminLoading) {
     // Use spinner here
     return (
-      <div className=" mt-5 text-center flex flex-col justify-center items-center">
-        <div>Loading...</div>
-        <progress className="progress w-56"></progress>
-      </div>
+      <Loading></Loading>
+      // <div className=" mt-5 text-center flex flex-col justify-center items-center">
+      //   <div>Loading...</div>
+      //   <progress className="progress w-56"></progress>
+      // </div>
     );
   }
   if (user?.uid && isAdmin) {
