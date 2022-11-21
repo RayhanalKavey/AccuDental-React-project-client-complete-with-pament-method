@@ -23,11 +23,13 @@ const SignUp = () => {
   //==========jwt workinG
   const [createdUserEmail, setCreatedUserEmail] = useState("");
   const [token] = useToken(createdUserEmail);
+
   //------------- redirect user
   const navigate = useNavigate();
   //------------- user location where they want to go
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+
   if (token) {
     // //Navigate user to the desired path
     navigate(from, { replace: true });
