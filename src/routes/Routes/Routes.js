@@ -10,6 +10,7 @@ import AllUsers from "../../pages/dashBoard/AllUsers/AllUsers";
 import DashBoard from "../../pages/dashBoard/DashBoard/DashBoard";
 import ManageDoctors from "../../pages/dashBoard/ManageDoctors/ManageDoctors";
 import MyAppointment from "../../pages/dashBoard/MyAppointment/MyAppointment";
+import Payment from "../../pages/dashBoard/Payment/Payment";
 import Home from "../../pages/home/Home/Home";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
         <DashboardLayout></DashboardLayout>{" "}
       </PrivateRoute>
     ),
+    errorElement: <ErrorPage></ErrorPage>, //error element
     children: [
       {
         path: "/dashBoard",
@@ -74,6 +76,16 @@ const router = createBrowserRouter([
             <ManageDoctors></ManageDoctors>
           </AdminRoute>
         ),
+      },
+      {
+        path: "/dashBoard/payment/:id",
+        element: (
+          <AdminRoute>
+            <Payment></Payment>
+          </AdminRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`http://localhost:5005/bookings/${params.id}`),
       },
     ],
   },
