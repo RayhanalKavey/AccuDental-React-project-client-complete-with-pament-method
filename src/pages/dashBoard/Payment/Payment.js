@@ -14,7 +14,7 @@ const Payment = () => {
   const navigation = useNavigation();
   const { treatment, price, slot, appointmentDate } = booking;
   // console.log("booking data", booking);
-  if (navigation.state === "loading") {
+  if (navigation?.state === "loading") {
     return <Loading></Loading>;
   }
   return (
