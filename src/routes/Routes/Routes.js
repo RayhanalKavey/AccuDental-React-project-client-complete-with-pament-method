@@ -79,11 +79,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/dashBoard/payment/:id",
-        element: (
-          <AdminRoute>
-            <Payment></Payment>
-          </AdminRoute>
-        ),
+        element: <Payment></Payment>,
         loader: ({ params }) =>
           fetch(`https://accudental-2-server.vercel.app/bookings/${params.id}`),
       },
