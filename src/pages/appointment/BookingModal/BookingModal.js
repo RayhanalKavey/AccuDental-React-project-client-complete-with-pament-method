@@ -28,7 +28,7 @@ const BookingModal = ({ treatment, selectDate, setTreatment, refetch }) => {
     };
 
     ///post bookings
-    fetch(`http://localhost:5005/bookings`, {
+    fetch(`https://accudental-2-server.vercel.app/bookings`, {
       method: "POST",
       headers: {
         "content-type": "application/json",

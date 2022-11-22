@@ -85,7 +85,7 @@ const router = createBrowserRouter([
           </AdminRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5005/bookings/${params.id}`),
+          fetch(`https://accudental-2-server.vercel.app/bookings/${params.id}`),
       },
     ],
   },

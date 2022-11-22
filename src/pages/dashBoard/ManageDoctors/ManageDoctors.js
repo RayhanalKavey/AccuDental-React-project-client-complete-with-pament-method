@@ -19,18 +19,21 @@ const ManageDoctors = () => {
     queryKey: ["specialty"],
     queryFn: async () => {
       try {
-        const res = await fetch("http://localhost:5005/doctors", {
-          headers: {
-            authorization: `bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
+        const res = await fetch(
+          "https://accudental-2-server.vercel.app/doctors",
+          {
+            headers: {
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+          }
+        );
         const data = await res.json();
         return data;
       } catch {}
     },
   });
   const handleDeleteDoctor = (doctor) => {
-    fetch(`http://localhost:5005/doctors/${doctor._id}`, {
+    fetch(`https://accudental-2-server.vercel.app/doctors/${doctor._id}`, {
       method: "DELETE",
       headers: {
         authorization: `bearer ${localStorage.getItem("accessToken")}`,

@@ -23,7 +23,7 @@ const AvailableAppointment = ({ selectDate }) => {
   // } = useQuery({
   //   queryKey: ["appointmentOptions"],
   //   queryFn: () =>
-  //     fetch("http://localhost:5005/appointmentOptions").then((res) =>
+  //     fetch("https://accudental-2-server.vercel.app/appointmentOptions").then((res) =>
   //       res.json()
   //     ),
   // });
@@ -36,7 +36,7 @@ const AvailableAppointment = ({ selectDate }) => {
     queryKey: ["appointmentOptions", date],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5005/appointmentOptions?date=${date}`
+        `https://accudental-2-server.vercel.app/appointmentOptions?date=${date}`
       );
       const data = await res.json();
       return data;
@@ -48,7 +48,7 @@ const AvailableAppointment = ({ selectDate }) => {
   //use query to lead data enD
 
   // useEffect(() => {
-  //   fetch("http://localhost:5005/appointmentOptions")
+  //   fetch("https://accudental-2-server.vercel.app/appointmentOptions")
   //     .then((res) => res.json())
   //     .then((data) => setAppointmentOptions(data));
   // }, []);

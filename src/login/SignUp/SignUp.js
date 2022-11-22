@@ -91,7 +91,7 @@ const SignUp = () => {
   // Save user to the data base
   const saveUser = (name, email, photoURL) => {
     const user = { name, email, photoURL };
-    fetch(`http://localhost:5005/users`, {
+    fetch(`https://accudental-2-server.vercel.app/users`, {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(user),
