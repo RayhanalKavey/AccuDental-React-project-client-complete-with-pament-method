@@ -3,14 +3,20 @@ import { useLoaderData } from "react-router-dom";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import { useNavigation } from "react-day-picker";
+import Loading from "../../../shared/component/Loading/Loading";
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 console.log(stripePromise);
 
 const Payment = () => {
   const booking = useLoaderData();
+  const navigation = useNavigation();
   const { treatment, price, slot, appointmentDate } = booking;
   // console.log("booking data", booking);
+  if (navigation.state === "loading") {
+    return <Loading></Loading>;
+  }
   return (
     <div>
       <h2 className="text-3xl text-center my-10">Payment</h2>
